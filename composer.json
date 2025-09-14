@@ -1,0 +1,112 @@
+{
+    "name": "wevitation/wedding-invitation-platform",
+    "description": "A comprehensive digital wedding invitation platform built with PHP, MySQL, Tailwind CSS, and Flowbite components",
+    "type": "project",
+    "keywords": [
+        "wedding",
+        "invitation",
+        "php",
+        "mysql",
+        "tailwind",
+        "rsvp",
+        "digital-invitation"
+    ],
+    "homepage": "https://github.com/wevitation/wedding-platform",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Wevitation Team",
+            "email": "team@wevitation.com",
+            "homepage": "https://wevitation.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-gd": "*",
+        "ext-fileinfo": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "phpmailer/phpmailer": "^6.8",
+        "intervention/image": "^2.7",
+        "endroid/qr-code": "^4.8",
+        "ramsey/uuid": "^4.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpstan/phpstan": "^1.10",
+        "symfony/var-dumper": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wevitation\\": "src/",
+            "Wevitation\\Admin\\": "admin/classes/",
+            "Wevitation\\Utils\\": "includes/classes/"
+        },
+        "files": [
+            "includes/functions.php",
+            "includes/security.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wevitation\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@setup-directories",
+            "@setup-permissions"
+        ],
+        "post-update-cmd": [
+            "@setup-directories",
+            "@setup-permissions"
+        ],
+        "setup-directories": [
+            "@php -r \"!is_dir('uploads') && mkdir('uploads', 0755, true);\"",
+            "@php -r \"!is_dir('uploads/covers') && mkdir('uploads/covers', 0755, true);\"",
+            "@php -r \"!is_dir('uploads/gallery') && mkdir('uploads/gallery', 0755, true);\"",
+            "@php -r \"!is_dir('uploads/music') && mkdir('uploads/music', 0755, true);\"",
+            "@php -r \"!is_dir('uploads/qrcodes') && mkdir('uploads/qrcodes', 0755, true);\"",
+            "@php -r \"!is_dir('uploads/themes') && mkdir('uploads/themes', 0755, true);\"",
+            "@php -r \"!is_dir('logs') && mkdir('logs', 0755, true);\"",
+            "@php -r \"!is_dir('cache') && mkdir('cache', 0755, true);\"",
+            "@php -r \"!is_dir('backups') && mkdir('backups', 0755, true);\""
+        ],
+        "setup-permissions": [
+            "@php -r \"chmod('uploads', 0755);\"",
+            "@php -r \"chmod('logs', 0755);\"",
+            "@php -r \"chmod('cache', 0755);\"",
+            "@php -r \"chmod('backups', 0755);\""
+        ],
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage",
+        "analyse": "phpstan analyse src admin includes --level=5",
+        "check-style": "phpcs --standard=PSR12 src admin includes",
+        "fix-style": "phpcbf --standard=PSR12 src admin includes",
+        "serve": "php -S localhost:8000 -t .",
+        "install-sample-data": "@php sample_data.php"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    },
+    "support": {
+        "issues": "https://github.com/wevitation/wedding-platform/issues",
+        "source": "https://github.com/wevitation/wedding-platform",
+        "docs": "https://docs.wevitation.com"
+    }
+}
